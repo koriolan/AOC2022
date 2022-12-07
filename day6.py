@@ -1,19 +1,13 @@
-with open('input/6.txt') as f:
-    key = f.read(4)
-    for l in f.read():
-        if len(set(key[-4:])) == 4:
-            break
-        else:
-            key += l
-print(f'part 1: {len(key)}')
-
-with open('input/6.txt') as f:
-        key = f.read(14)
+def find(cnt):
+    with open('input/6.txt') as f:
+        key = f.read(cnt)
         for l in f.read():
-            if len(set(key[-14:])) == 14:
+            if len(set(key[-cnt:])) == cnt:
                 break
             else:
                 key += l
+    return len(key)
 
 
-print(f'part 2: {len(key)}')
+print(f'part 1: {find(4)}')
+print(f'part 2: {find(14)}')
