@@ -1,3 +1,6 @@
+from time import perf_counter as pfc
+startpfc = pfc()
+
 stock9000 = [[] for i in range(9)]
 stock9001 = [[] for j in range(9)]
 with open('input/5.txt') as f:
@@ -17,3 +20,4 @@ with open('input/5.txt') as f:
         del stock9001[fr][-cnt:]
     print(f"part1 :{''.join([i[-1] if len(i) > 0 else '' for i in stock9000])}")
     print(f"part2 :{''.join([i[-1] if len(i) > 0 else '' for i in stock9001])}")
+print(f'time: {pfc() - startpfc}')

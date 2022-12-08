@@ -1,3 +1,7 @@
+from time import perf_counter as pfc
+start = pfc()
+
+
 class Item:
     def __init__(self, name, size, parent, isdir=False):
         self.name = name
@@ -7,7 +11,8 @@ class Item:
         self.isDir = isdir
 
     def add(self, child):
-        self.items.append(child)
+        if not any([child.name == x.name for x in self.items]):
+            self.items.append(child)
 
     def get_size(self):
         if self._size is None:
@@ -72,3 +77,4 @@ def findMin(dirs, min_dir):
 
 print(f'part 1: {sums(D)}')
 print(f'part 2: {findMin(D, minDir)}')
+print(f'time: {pfc() - start}')
