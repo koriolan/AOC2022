@@ -1,5 +1,6 @@
 from time import perf_counter as pfc
-start1 = pfc()
+start = pfc()
+
 forest = []
 with open('input/8.txt') as f:
       forest = [[int(v) for v in s.strip()]for s in f.readlines()]
@@ -61,4 +62,4 @@ for y in range(rows-1, -1, -1):
 
 print(f'part 1: {sum([sum(f) for f in invisible])}')
 print(f'part 2: {max([max(s) for s in scenic])}')
-print(f'time: {pfc() - start1}')
+print(f'time: {pfc() - start}')
