@@ -1,3 +1,6 @@
+from time import perf_counter as pfc
+start = pfc()
+
 x = 1
 cycle = 0
 crt = 0
@@ -23,7 +26,7 @@ def cycleInc():
     crt += 1
 
 
-with open('10.txt') as f:
+with open('input/10.txt') as f:
     for line in f.readlines():
         a = line.strip().split(' ')
         cycleInc()
@@ -36,3 +39,4 @@ with open('10.txt') as f:
 print(f'part 1: {part1}')
 print('part 2:')
 print(part2)
+print(f'time: {pfc() - start}')
