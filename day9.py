@@ -30,63 +30,26 @@ class Point:
 directions = {'R': Point(1, 0), 'L': Point(-1, 0), 'U': Point(0, 1), 'D': Point(0, -1)}
 
 
-def sign(x):
-    if x > 0:
-        return 1
-    if x < 0:
-        return -1
-    return 0
-
-
-def draw_line(p0, p1):
-    x, y = p0.x, p0.y
-    A = p1.y - p0.y
-    B = p0.x - p1.x
-    dx, dy = -sign(B), sign(A)
-    ex = A * dx
-    ey = B * dy
-
-    if abs(ex) < abs(ey):
-        x += dx
-    else:
-        y += dy
-    return Point(x, y)
-
-
 def move(head, tail, direction):
     distance = tail.distance(head)
+    p = head - tail
     if distance == 4:
-         tail += direction
-    # elif distance == 5:
-    #     p = head - tail
-    #     if abs(p.x) == 1:
-    #         tail.x = head.x
-    #         tail.y = head.y + 1 if p.y < 0 else head.y - 1
-    #     else:
-    #         tail.y = head.y
-    #         tail.x = head.x + 1 if p.x < 0 else head.x - 1
+         tail += Point(p.x//2, p.y//2) #direction
+    elif distance == 5:
+        if abs(p.x) == 1:
+            tail.x = head.x
+            tail.y = head.y + 1 if p.y < 0 else head.y - 1
+        else:
+            tail.y = head.y
+            tail.x = head.x + 1 if p.x < 0 else head.x - 1
     elif distance in (0, 1, 2):
         pass
+    elif distance == 8:
+        tail.x += (1 if p.x > 0 else -1)
+        tail.y += (1 if p.y > 0 else -1)
     else:
-        # xba = tail.x-head.x
-        # yba = tail.y-head.y
-        # xa = head.x
-        # ya = head.y
-        # maybe = set()
-        # for dx in range(-1, 2, 1):
-        #     for dy in range(-1, 2, 1):
-        #         p = head + Point(dx, dy)
-        #         if p.x-xa/xba == p.y-ya/yba:
-        #             maybe.add(p)
-        # min_p = maybe.pop()
-        # min_d = tail.distance(min_p)
-        # for p in maybe:
-        #     d = tail.distance(p)
-        #     if min_d > d:
-        #         min_d = d
-        #         min_p = p
-        # tail = min_p
-        tail = draw_line(head, tail)
+        print(f'Alarm {distance} {head} {tail}')
+
     return tail
 
 
@@ -97,11 +60,13 @@ def move_rope(rope):
             a = line.split()
             c = int(a[1])
             d = directions[a[0]]
+            #print(rope)
             for i in range(c):
                 rope[0] += d
                 for j in range(len(rope)-1):
                     rope[j+1] = move(rope[j], rope[j+1], d)
                 points.add(rope[-1].save())
+
     return points
 
 
