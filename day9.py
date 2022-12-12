@@ -30,11 +30,11 @@ class Point:
 directions = {'R': Point(1, 0), 'L': Point(-1, 0), 'U': Point(0, 1), 'D': Point(0, -1)}
 
 
-def move(head, tail, direction):
+def move(head, tail):
     distance = tail.distance(head)
     p = head - tail
     if distance == 4:
-         tail += Point(p.x//2, p.y//2) #direction
+         tail += Point(p.x//2, p.y//2)
     elif distance == 5:
         if abs(p.x) == 1:
             tail.x = head.x
@@ -47,8 +47,6 @@ def move(head, tail, direction):
     elif distance == 8:
         tail.x += (1 if p.x > 0 else -1)
         tail.y += (1 if p.y > 0 else -1)
-    else:
-        print(f'Alarm {distance} {head} {tail}')
 
     return tail
 
@@ -60,11 +58,10 @@ def move_rope(rope):
             a = line.split()
             c = int(a[1])
             d = directions[a[0]]
-            #print(rope)
             for i in range(c):
                 rope[0] += d
                 for j in range(len(rope)-1):
-                    rope[j+1] = move(rope[j], rope[j+1], d)
+                    rope[j+1] = move(rope[j], rope[j+1])
                 points.add(rope[-1].save())
 
     return points
