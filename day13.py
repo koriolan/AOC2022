@@ -67,24 +67,6 @@ def equal(a, b):
     return None
 
 
-def partition(array, low, high):
-    pivot = array[high]
-    i = low - 1
-    for j in range(low, high):
-        if equal(array[j], pivot):
-            i = i + 1
-            (array[i], array[j]) = (array[j], array[i])
-    (array[i + 1], array[high]) = (array[high], array[i + 1])
-    return i + 1
-
-
-def qsort(a, low, high):
-    if low < high:
-        pi = partition(a, low, high)
-        qsort(a, low, pi - 1)
-        qsort(a, pi + 1, high)
-
-
 pairs = []
 with open('input/13.txt') as f:
     for line in f.read().split('\n\n'):
@@ -92,13 +74,18 @@ with open('input/13.txt') as f:
         pairs.append((parse(a), parse(b)))
 
 
-flat_list = [item for sublist in pairs for item in sublist]
-divider1 = [[2]]
-divider2 = [[6]]
-flat_list.append(divider1)
-flat_list.append(divider2)
-qsort(flat_list, 0, len(flat_list)-1)
+min_2 = 1
+min_6 = 2
+for a, b in pairs:
+    if equal(a, [[2]]):
+        min_2 += 1
+    if equal(a, [[6]]):
+        min_6 += 1
+    if equal(b, [[2]]):
+        min_2 += 1
+    if equal(b, [[6]]):
+        min_6 += 1
 
 print(f'Part 1: {sum(idx for idx, pair in enumerate(pairs, 1) if equal(*pair))}')
-print(f'Part 2: {(flat_list.index(divider1)+1)*(flat_list.index(divider2)+1)}')
+print(f'Part 2: {min_2*min_6}')
 print(f'time: {pfc() - start}')
