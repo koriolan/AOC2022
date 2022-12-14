@@ -57,16 +57,16 @@ with open('input/13.txt') as f:
         pairs.append((parse(a), parse(b)))
 
 
-min_2 = 1
-min_6 = 2
+idx_2 = 1
+idx_6 = 2
 for a in pairs:
     for b in a:
         if equal(b, [[2]]):
-            min_2 += 1
-            min_6 += 1
+            idx_2 += 1
+            idx_6 += 1
         elif equal(b, [[6]]):
-            min_6 += 1
+            idx_6 += 1
 
 print(f'Part 1: {sum(idx for idx, pair in enumerate(pairs, 1) if equal(*pair))}')
-print(f'Part 2: {min_2*min_6}')
+print(f'Part 2: {idx_2*idx_6}')
 print(f'time: {pfc() - start}')
