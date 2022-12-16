@@ -1,9 +1,9 @@
 from time import perf_counter as pfc
 
 start = pfc()
-part1_line = 10
-x_range = range(0, 20)
-y_range = range(0, 20)
+part1_line = 2000000
+x_range = range(0, 4000000)
+y_range = range(0, 4000000)
 sensors = []
 part1 = -1
 part2 = -1
@@ -18,45 +18,46 @@ with open('input/15.txt') as f:
         if yB == part1_line:
             part1_beacon.add(xB)
 
-
 finding = False
-for s in sensors:
-    m = s[2]+1
-    st = s[0][0] - m
-    if st < x_range.start:
-        st = x_range.start
-    end = s[0][0] + m
-    if end > x_range.stop:
-        end = x_range.stop
 
-    for x in range(st, end+1):
-        t = m-abs(s[0][0] - x)
-        y1 = -t + s[0][1]
-        y2 = -t - s[0][1]
-        if x == 14:
-            print(y1, y2)
-        if y_range.start <= y1 <= y_range.stop:
-            finding = False
-            for s1 in sensors:
-                if(abs(s1[0][0] - x) + abs(s1[0][1]-y1)) <= s[2]:
-                    finding = True
+for s in sensors:
+    for s2 in sensors:
+        m = abs(s[0][0]-s2[0][0])+abs(s[0][1]-s2[0][1])
+        if m-s[2]-s2[2] == 2:
+            m = s[2] + 1
+            st = s[0][0] - m
+            if st < x_range.start:
+                st = x_range.start
+            end = s[0][0] + m
+
+            if end > x_range.stop:
+                end = x_range.stop
+            for x in range(st, end + 1):
+                t = m - abs(s[0][0] - x)
+                y1 = t + s[0][1]
+                y2 = -t + s[0][1]
+                finding1 = True
+                finding2 = True
+                for s1 in sensors:
+                    if y_range.start <= y1 <= y_range.stop:
+                        if (abs(s1[0][0] - x) + abs(s1[0][1] - y1)) <= s1[2]:
+                            finding1 = False
+                    if y1 != y2 and y_range.start <= y2 <= y_range.stop:
+                        if (abs(s1[0][0] - x) + abs(s1[0][1] - y2)) <= s1[2]:
+                            finding2 = False
+                if finding1:
+                    part2 = x * 4000000 + y1
                     break
-            if not finding:
-                print('y1', x, y1)
-        if y1 != y2 and y_range.start <= y2 <= y_range.stop and finding:
-            finding = False
-            for s1 in sensors:
-                if(abs(s1[0][0] - x) + abs(s1[0][1]-y2)) <= s[2]:
-                    finding = True
+                elif finding2:
+                    part2 = x * 4000000 + y2
                     break
-            if not finding:
-                print('y2', x, y2)
-    #if not finding:
-    #    break
+            break
+print(f'Part 2: {part2}')
+print(f'time: {pfc() - start}')
+part2 = -1
 
 def cmp(a):
     return a.start
-
 
 def get_ranges(line, sen, ran):
     for s in sen:
