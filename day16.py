@@ -10,7 +10,7 @@ pumps_works = []
 with open('input/16.txt') as f:
     for line in f.readlines():
         v, p, *t = line.strip().replace('Valve ', '').replace(' has flow rate=', ',').replace('; tunnels lead to valves ', ',')\
-            .replace('; tunnel leads to valve ', ',').replace(' ','').split(',')
+            .replace('; tunnel leads to valve ', ',').replace(' ', '').split(',')
         verticles[v] = t
         pumps[v] = int(p)
         if pumps[v] > 0:

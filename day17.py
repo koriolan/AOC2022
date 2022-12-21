@@ -14,8 +14,8 @@ tower = [0b11111111]
 
 stoped = 0
 tmp = rocks[rocks_id]
-pos = 3
-while stoped < 4:
+pos = 4
+while stoped < 2022:
 
     if directions[dir_id] == '<':
         if all([(r << 1 & 0b10000000) != 0b10000000 for r in tmp]):
@@ -24,7 +24,7 @@ while stoped < 4:
             for r in tmp:
                 if t >= len(tower):
                     break
-                if (r ^ tower[t]) != (r | tower[t]):
+                if ((r << 1) ^ tower[t]) != ((r << 1) | tower[t]):
                     left = False
                     break
                 t += 1
@@ -37,7 +37,7 @@ while stoped < 4:
             for r in tmp:
                 if t >= len(tower):
                     break
-                if (r ^ tower[t]) != (r | tower[t]):
+                if ((r >> 1) ^ tower[t]) != ((r >> 1) | tower[t]):
                     right = False
                     break
                 t += 1
@@ -47,7 +47,7 @@ while stoped < 4:
     if dir_id >= len(directions):
         dir_id = 0
 
-    t = pos
+    t = pos - 1
     down = True
     for r in tmp:
         if t >= len(tower):
@@ -60,7 +60,6 @@ while stoped < 4:
     if down:
         pos -= 1
     else:
-        pos += 1
         for r in tmp:
             if pos < len(tower):
                 tower[pos] = tower[pos] ^ r
@@ -68,15 +67,11 @@ while stoped < 4:
                 tower.append(r)
             pos += 1
         rocks_id += 1
-        pos = len(tower) + 2
+        pos = len(tower) + 3
         if rocks_id >= len(rocks):
             rocks_id = 0
         tmp = rocks[rocks_id]
-
         stoped += 1
-        # for k in range(-1, -len(tower)-1, -1):
-        #     print(f'{tower[k]:08b}')
-        # print('===================')
-for k in range(-1, -len(tower)-1, -1):
-        print(f'{tower[k]:08b}')
-print(len(tower))
+part1 = len(tower)-1
+print(f'part 1:{part1}')
+print(f'time: {pfc() - start}')
