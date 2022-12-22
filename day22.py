@@ -120,24 +120,7 @@ def part2():
     direction = 0
     a = 4
     cube = [[]]
-    for i, k in enumerate(maps):
-        cube[-1].append(k[a*2:])
-        if i == 3:
-            break
-    for t in range(3):
-        cube.append([])
-        for i, k in enumerate(maps[a:]):
-            cube[-1].append(k[a*t: a*t+a])
-            if i == 3:
-                break
-    for t in range(2):
-        cube.append([])
-        for i, k in enumerate(maps[a+a:]):
-            cube[-1].append(k[a*2+a * t: a*2+a * t + a])
-            if i == 3:
-                break
-    for c in cube:
-        print(c)
+
 
     for p in range(0, len(path), 2):
         sm = int(path[p])
