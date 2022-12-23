@@ -73,13 +73,13 @@ def part(part1=True):
                         new_dir = 0
                         if 0 <= position[1] < 50:
                             new_dir = 2
-                            new_pos = [99, 100 + position[1]]
+                            new_pos = [99, 100 + (49 - position[1])]
                         elif 50 <= position[1] < 100:
                             new_dir = 3
                             new_pos = [100 + position[1] - 50, 49]
                         elif 100 <= position[1] < 150:
                             new_dir = 2
-                            new_pos = [149, position[1] - 100]
+                            new_pos = [149, 49-(position[1] - 100)]
                         elif 150 <= position[1] < 200:
                             new_dir = 3
                             new_pos = [50 + position[1] - 150, 149]
@@ -139,13 +139,13 @@ def part(part1=True):
                         new_dir = 0
                         if 0 <= position[1] < 50:
                             new_dir = 0
-                            new_pos = [0, 100 + position[1]]
+                            new_pos = [0, 100 + (49 - position[1])]
                         elif 50 <= position[1] < 100:
                             new_dir = 1
                             new_pos = [position[1] - 50, 100]
                         elif 100 <= position[1] < 150:
                             new_dir = 0
-                            new_pos = [50, position[1] - 100]
+                            new_pos = [50, 49 - (position[1] - 100)]
                         elif 150 <= position[1] < 200:
                             new_dir = 1
                             new_pos = [50 + position[1] - 150, 0]
@@ -163,7 +163,7 @@ def part(part1=True):
                 else:
                     sm = 0
 
-            else:  # UP
+            elif direction == 3:  # UP
                 if position[1] - 1 < 0 or len(maps[position[1] - 1]) <= position[0] or maps[position[1] - 1][position[0]] == ' ':
                     if part1:
                         sm = findUp(sm, position)
@@ -181,17 +181,19 @@ def part(part1=True):
                             new_pos = [position[0]-100, 199]
                         else:
                             assert 1 != 1, f'{position}, Up'
-                        if maps[new_pos[1]][new_pos[0]] == '#':
-                            sm = 0
-                        else:
+                        if maps[new_pos[1]][new_pos[0]] == '.':
                             direction = new_dir
                             position = new_pos
                             sm -= 1
+                        else:
+                            sm = 0
                 elif maps[position[1] - 1][position[0]] == '.':
                     position[1] -= 1
                     sm -= 1
                 else:
                     sm = 0
+            else:
+                assert 1 != 1, f'{direction}'
 
         if len(path) > p + 1:
             if path[p + 1] == 'R':
@@ -202,11 +204,12 @@ def part(part1=True):
                 direction -= 1
                 if direction < 0:
                     direction = 3
+
     return (position[1] + 1) * 1000 + (position[0] + 1) * 4 + direction
 
 
-# Part1 = part()
+Part1 = part()
 Part2 = part(False)
-# print(f'Part 1:{Part1}')
+print(f'Part 1:{Part1}')
 print(f'Part 2:{Part2}')
 print(f'time: {pfc() - start}')
