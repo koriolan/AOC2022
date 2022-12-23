@@ -73,6 +73,9 @@ def part(part1=True):
                         if 0 <= position[1] < 50:
                             direction = 2
                             new_pos = [99, 100 + position[1]]
+                        elif 50 <= position[1] < 100:
+                            direction = 3
+                            new_pos = [100 + position[1] - 50, 49]
                         elif 100 <= position[1] < 150:
                             direction = 2
                             new_pos = [149, position[1] - 100]
@@ -100,10 +103,14 @@ def part(part1=True):
                     else:
                         new_pos = []
                         if 0 <= position[0] < 50:
+                            direction = 1
                             new_pos = [100+position[0], 0]
                         elif 50 <= position[0] < 100:
                             direction = 2
                             new_pos = [49, 150 + position[0] - 50]
+                        elif 100 <= position[0] < 150:
+                            direction = 2
+                            new_pos = [99, 50 + position[0] - 100]
                         else:
                             assert 1 != 1, f'{position}, Down'
 
@@ -128,6 +135,9 @@ def part(part1=True):
                         if 0 <= position[1] < 50:
                             direction = 0
                             new_pos = [0, 100 + position[1]]
+                        elif 50 <= position[1] < 100:
+                            direction = 1
+                            new_pos = [position[1] - 50, 100]
                         elif 100 <= position[1] < 150:
                             direction = 0
                             new_pos = [50, position[1] - 100]
@@ -160,6 +170,7 @@ def part(part1=True):
                             direction = 0
                             new_pos = [0, 150 + position[0] - 50]
                         elif 100 <= position[0] < 150:
+                            direction = 3
                             new_pos = [position[0]-100, 199]
                         else:
                             assert 1 != 1, f'{position}, Up'
